@@ -1,0 +1,7 @@
+@PACKAGE_INIT@
+
+include(CMakeFindDependencyMacro)
+
+check_required_components(gtmathematics)
+
+include("${CMAKE_CURRENT_LIST_DIR}/gtmathematicsTargets.cmake")
