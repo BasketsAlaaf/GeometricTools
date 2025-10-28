@@ -1,9 +1,6 @@
-project(gtmathematics VERSION ${GTE_VERSION_MAJOR}.${GTE_VERSION_MINOR})
-
 # Minimum CMake version
 cmake_minimum_required(VERSION 3.14)
 
-include(GNUInstallDirs)
 
 # Define the project
 project(gtmathematics
@@ -12,6 +9,8 @@ project(gtmathematics
     LANGUAGES CXX
 )
 
+include(GNUInstallDirs)
+
 # Define the library as INTERFACE, which is typical for header-only libraries
 add_library(gtmathematics INTERFACE)
 
@@ -19,7 +18,7 @@ add_library(gtmathematics INTERFACE)
 # Assuming headers are in an "include" folder next to this CMakeLists.txt
 target_include_directories(gtmathematics
     INTERFACE 
-        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/..>
         $<INSTALL_INTERFACE:include/${PROJECT_NAME}>
 )
 
@@ -27,7 +26,8 @@ target_include_directories(gtmathematics
 include(CMakePackageConfigHelpers)
 
 # Find all .h files in the same directory as this CMakeLists.txt
-file(GLOB HEADER_FILES "${CMAKE_CURRENT_SOURCE_DIR}/*.h")
+# CONFIGURE_DEPENDS tells CMake to recheck for new/removed files during build
+file(GLOB HEADER_FILES CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/*.h")
 
 # Install the header files
 install(FILES ${HEADER_FILES} DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}/Mathematics)
